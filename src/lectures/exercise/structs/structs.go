@@ -19,6 +19,36 @@ package main
 
 import "fmt"
 
-func main() {
+type Point struct {
+	x, y int
+}
 
+type Rectangle struct {
+	width, length int
+}
+
+func getArea(shape Rectangle) int {
+	return shape.length * shape.width
+}
+
+func getPerimeter(shape Rectangle) int {
+	return (shape.length * 2) + (shape.width * 2)
+}
+
+func getAreaAndPerimeter(shape Rectangle) (int, int) {
+	return getArea(shape), getPerimeter(shape)
+}
+
+func main() {
+	smallBox := Rectangle{10, 10}
+	bigBox := Rectangle{length: 100, width: 50}
+
+	smallArea, smallPerimeter := getAreaAndPerimeter(smallBox)
+	bigArea, bigPerimeter := getAreaAndPerimeter(bigBox)
+	fmt.Println("Small box area", smallArea, "and perimiter", smallPerimeter)
+	fmt.Println("Big box area", bigArea, "and perimiter", bigPerimeter)
+	smallBox.length *= 2
+	smallBox.width *= 2
+	newSmallArea, newSmallPerimeter := getAreaAndPerimeter(smallBox)
+	fmt.Println("Small box area", newSmallArea, "and perimiter", newSmallPerimeter)
 }

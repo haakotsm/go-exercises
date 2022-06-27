@@ -14,5 +14,22 @@ package main
 
 import "fmt"
 
+func checkFizz(num int) bool {
+	return num%3 == 0
+}
+func checkBuzz(num int) bool {
+	return num%5 == 0
+}
 func main() {
+	for i := 1; i <= 50; i++ {
+		if checkFizz(i) && checkBuzz(i) {
+			fmt.Println("FizzBuzz")
+		} else if checkFizz(i) {
+			fmt.Println("Fizz")
+		} else if checkBuzz(i) {
+			fmt.Println("Buzz")
+		} else {
+			fmt.Println(i)
+		}
+	}
 }
