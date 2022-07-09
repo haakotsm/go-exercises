@@ -21,6 +21,65 @@ package main
 
 import "fmt"
 
-func main() {
+type ModelType int
+type ModelName string
 
+type Lifter interface {
+	Lift()
+}
+
+const (
+	Motorcycle ModelType = iota
+	Car
+	Truck
+)
+
+func (m ModelType) String() string {
+	switch m {
+	case Motorcycle:
+		return "Motorcycle"
+	case Car:
+		return "Car"
+	case Truck:
+		return "Truck"
+	}
+	return ""
+}
+
+type Vehicle struct {
+	modelType ModelType
+	modelName ModelName
+}
+
+type Shop string
+
+func (v Vehicle) Lift() {
+	fmt.Println("Checking vehicle type")
+	switch v.modelType {
+	case Motorcycle:
+		fmt.Printf("%v, type %v goes to the small lift\n", v.modelName, v.modelType)
+
+	case Car:
+		fmt.Printf("%v, type %v goes to the standard lift\n", v.modelName, v.modelType)
+
+	case Truck:
+		fmt.Printf("%v, type %v goes to the large lift\n", v.modelName, v.modelType)
+	}
+	fmt.Println()
+}
+
+func (shop Shop) repairVehicle(lifters []Lifter) {
+	for i := 0; i < len(lifters); i++ {
+		lifter := lifters[i]
+		lifter.Lift()
+	}
+}
+
+func main() {
+	shop := Shop("Riis Bilglass")
+	car := Vehicle{Car, "Ford Mondeo"}
+	truck := Vehicle{Truck, "Ford Ranger"}
+	motorcycle := Vehicle{Motorcycle, "Kawazaki Ninja"}
+	lifters := []Lifter{car, truck, motorcycle}
+	shop.repairVehicle(lifters)
 }

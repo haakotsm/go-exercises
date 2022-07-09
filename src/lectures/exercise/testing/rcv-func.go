@@ -12,7 +12,7 @@
 //  - Print out the statistic change within each function
 //  - Execute each function at least once
 
-package main
+package rcv
 
 import "fmt"
 
@@ -29,17 +29,32 @@ type Character struct {
 }
 
 func (char *Character) takeDamage(health Health) {
-	char.currentHP -= health
+	if char.currentHP-health < 0 {
+		char.currentHP = 0
+	} else {
+		char.currentHP -= health
+	}
 }
 func (char *Character) gainHealing(health Health) {
-	char.currentHP += health
+	if char.currentHP+health > char.maxHP {
+		char.currentHP = char.maxHP
+	} else {
+		char.currentHP += health
+	}
 }
 func (char *Character) useEnergy(energy Energy) {
-	char.currentEP -= energy
+	if char.currentEP-energy < 0 {
+		char.currentEP = 0
+	} else {
+		char.currentEP -= energy
+	}
 }
 func (char *Character) gainEnergy(energy Energy) {
-	char.currentEP += energy
-
+	if char.currentEP+energy > char.maxEP {
+		char.currentEP = char.maxEP
+	} else {
+		char.currentEP += energy
+	}
 }
 
 func (char *Character) displayStats() {

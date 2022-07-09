@@ -18,6 +18,37 @@ package main
 
 import "fmt"
 
-func main() {
+const (
+	Active   = true
+	Inactive = false
+)
 
+type State bool
+type Item struct {
+	name        string
+	securityTag State
+}
+
+func setTagState(item *Item, state State) {
+	item.securityTag = state
+}
+
+func checkout(list []Item) {
+	for i, _ := range list {
+		setTagState(&list[i], Inactive)
+	}
+}
+
+func main() {
+	items := []Item{
+		{"Sweater", Active},
+		{"T-shirt", Active},
+		{"Pants", Active},
+		{"Shorts", Active},
+	}
+	fmt.Println(items)
+	setTagState(&items[2], Inactive)
+	fmt.Println(items)
+	checkout(items)
+	fmt.Println(items)
 }
